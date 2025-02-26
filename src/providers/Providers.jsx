@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import { getCookie } from "../utils/helpers/cookie";
 import useStore from "../store";
 import { ToastContainer } from "react-toastify";
-import PropTypes from 'prop-types';
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import PropTypes from "prop-types";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 
@@ -35,12 +37,16 @@ Authorize.propTypes = {
 // children یعنی هرجیزی که بینش قرار بگیره و پاس داده بشه
 const Providers = ({ children }) => {
   return (
-    <QueryClientProvider client={queryClient}>
-    <Authorize>
-      {children}
-      <ToastContainer />
-    </Authorize>
-    </QueryClientProvider>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <Authorize>
+          {children}
+          <ToastContainer />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </Authorize>
+      </QueryClientProvider>
+
+    </>
   );
 };
 

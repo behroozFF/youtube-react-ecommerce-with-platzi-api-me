@@ -17,6 +17,8 @@ import Typography from "@mui/material/Typography";
 import DashboardSkeleton from "../../components/skeleton/DashboardSkeleton";
 import ErrorOnFetchApi from "../../components/commen/ErrorOnFetchApi/ErrorOnFetchApi.jsx";
 import { removeCookie } from "../../utils/helpers/cookie.js";
+import LogoutIcon from '@mui/icons-material/Logout';
+import Header from "../../components/commen/Header";
 
 const Dashboard = () => {
   const { access_token, removeState } = useStore();
@@ -33,7 +35,6 @@ const Dashboard = () => {
   removeState();
 
   toast.warn("Logout successfully, redirecting to login page ...");
-
   setTimeout(() => 
     navigate("/login"), 1000);
  }
@@ -41,6 +42,7 @@ const Dashboard = () => {
   console.log(access_token);
   console.log(data);
   return <div>
+    <Header/>
         {access_token != null && access_token != undefined ? (
         <>
           {/* <p>content</p> */}
@@ -49,6 +51,7 @@ const Dashboard = () => {
           {error && <ErrorOnFetchApi message={error?.message} />}
           {
             data && (
+            <>
               <ListItem alignItems="flex-start">
                 <div className="w-[10rem] pe-4">
                   <img className="rounded-full border-6" alt="profile image" 
@@ -108,8 +111,12 @@ const Dashboard = () => {
                     </div>
                   }
                 />
-                <button onClick={handleLogout} className="bg-red-500 txt-slate-50 rounded-md p-4">Logout</button>
               </ListItem>
+              <button onClick={handleLogout} className="bg-red-500 txt-slate-50  my-3 mx-8 rounded-md p-4 ms-4 flex items-center gap-2">
+              <span>Logout</span>
+              <LogoutIcon />
+            </button>
+            </>
             )
             /*<p>content</p> */
           }

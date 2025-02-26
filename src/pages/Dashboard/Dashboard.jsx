@@ -14,7 +14,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import DashboardSkeleton from "../../components/Skeleton/DashboardSkeleton";
+import DashboardSkeleton from "../../components/skeleton/DashboardSkeleton";
 import ErrorOnFetchApi from "../../components/commen/ErrorOnFetchApi/ErrorOnFetchApi.jsx";
 import { removeCookie } from "../../utils/helpers/cookie.js";
 

@@ -3,6 +3,8 @@ import Root from "../pages/Root";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import Categories from "../pages/Categories/Categories";
+import Products from "../pages/Products";
 const router = createBrowserRouter([
     {
       path: "/",
@@ -19,7 +21,15 @@ const router = createBrowserRouter([
     {
       path: "/Dashboard",
       element: <Dashboard/>
-    }
+    },
+    {
+      path: "/Categories/:id",
+      element: <Categories/>
+    },
+    {
+      path: "/Products/:id",
+      element: <Products/>
+    },
   ]);
 
   export default router;

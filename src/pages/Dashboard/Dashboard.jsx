@@ -33,7 +33,6 @@ const Dashboard = () => {
  const handleLogout = () => {
   removeCookie("credential");
   removeState();
-
   toast.warn("Logout successfully, redirecting to login page ...");
   setTimeout(() => 
     navigate("/login"), 1000);
@@ -122,8 +121,15 @@ const Dashboard = () => {
           }
         </>
       ) : (
-        <Link className="underline" to="/login">
-          only logged in users can access
+        <Link className="underline flex items-center justify-center" to="/login">
+          <p className="
+          bg-slate-500
+           px-4 py-2 
+           capitalize
+         text-slate-50 
+           rounded-md
+           my-16
+           text-4xl">only logged in users can access dashboard/profile</p>
         </Link>
       )}
   </div>;

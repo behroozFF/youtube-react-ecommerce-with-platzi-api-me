@@ -6,7 +6,7 @@ import loginApi from "../../../utils/apis/auth/loginApi";
 import { toast } from "react-toastify";
 import { setCookie } from "../../../utils/helpers/cookie";
 import useStore from "../../../store";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const loginSchema = z.object({
@@ -15,47 +15,45 @@ const loginSchema = z.object({
 });
 
 const LoginForm = () => {
-
-  const {setState ,access_token} = useStore();
+  const { setState, access_token } = useStore();
   const navigate = useNavigate();
-  const {  
+  const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({ resolver: zodResolver(loginSchema) });
 
+  useEffect(() => {
+    if (access_token != null && access_token != undefined) {
+      toast.warn("you are already logged in!");
+      navigate("/dashboard");
+    }
+  }, []);
 
-   useEffect(() => {
-        if(access_token != null && access_token != undefined){
-          toast.warn("you are already logged in!");
-              navigate("/dashboard");
-        }
-      }, []);
+  const handleLogin = async (data) => {
+    const result = await loginApi(data);
+    if (result?.status == 200 || result?.status == 201) {
+      const access_token = result?.data?.access_token;
+      const refresh_token = result?.data?.refresh_token;
 
+      // toast.error("با موفقیت انجام شد.");
 
-  const handleLogin=async(data)=>{
-          const result = await loginApi(data);
-          if (result?.status == 200 || result?.status == 201) {
-            const access_token = result?.data?.access_token;
-            const refresh_token = result?.data?.refresh_token;
+      await setCookie("credential", {
+        access_token: access_token,
+        refresh_token: refresh_token,
+      });
+      setState({ access_token: access_token, refresh_token: refresh_token });
+      toast.success("logged in successfully, redirecting to dashboard...");
 
-            // toast.error("با موفقیت انجام شد."); 
-
-            await setCookie("credential", {
-              access_token: access_token,
-              refresh_token: refresh_token,
-            });
-            setState({access_token:access_token, refresh_token:refresh_token});
-            toast.success("logged in successfully, redirecting to dashboard...");
-             
-            setTimeout(() => navigate("/dashboard"), 1000);
-          }else toast.error("invalid username password!");
-        };
+      setTimeout(() => navigate("/dashboard"), 1000);
+    } else toast.error("invalid username password!");
+  };
 
   return (
     <form
       onSubmit={handleSubmit(async (data) => await handleLogin(data))}
-      className="border-2 rounded-xl shadow-md p-4  lg:w-[30%] w-[80%]">
+      className="border-2 rounded-xl shadow-md p-4  lg:w-[30%] w-[80%]"
+    >
       <fieldset disabled={isSubmitting} className="flex flex-col gap-4">
         <input
           {...register("email")}
@@ -85,11 +83,13 @@ const LoginForm = () => {
         )}
         <button
           className="w-[100%] bg-slate-600 text-slate-50 rounded-md py-2 px-4"
-          type="submit">
+          type="submit"
+        >
           {isSubmitting ? "Logginig..." : "Login"}
         </button>
-       <Link className="text-center underline text-sm" to="/Signup">
-       dont have a account? signup {""}</Link>
+        <Link className="text-center underline text-sm" to="/Signup">
+          dont have a account? signup {""}
+        </Link>
       </fieldset>
     </form>
   );

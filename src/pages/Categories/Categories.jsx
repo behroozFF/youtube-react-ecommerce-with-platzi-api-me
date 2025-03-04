@@ -20,21 +20,21 @@ const Categories = () => {
     <>
       <Header />
       <div className="flex flex-col items-center justify-center gap-4">
-        {isPending && <CategoryInfoSkeleton />} 
+        {isPending && <CategoryInfoSkeleton />}
         {error && <ErrorOnFetchApi message={error?.message} />}
-        {data && (   /* ampersand */
+        {data /* ampersand */ && (
           <>
             <img
               className="w-[8rem] h-[8rem] rounded-full"
               src={data?.data?.image}
-              alt=""
+              alt="" 
             />
             <p className="font-bold">{data?.data?.name}</p>
-    
+      
           </>
         )}
       </div>
-    
+      {<ProductsByCategoryGrid id={id}/>}
     </>
   );
 };

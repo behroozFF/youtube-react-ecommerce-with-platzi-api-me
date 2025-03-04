@@ -7,11 +7,12 @@ import { Link } from "react-router-dom";
 
 const ProductsByCategoryGrid = ({ id }) => {
   const { isPending, error, data } = useQuery({
-    queryKey: ["productsByCategory"],
+    queryKey: ["categoriesById"],
     queryFn: () => getProductsByCategory(id),
   });
 
   console.log(data);
+
   return (
     <div className="flex flex-wrap items-center justify-center gap-4 px-8">
       {isPending &&
